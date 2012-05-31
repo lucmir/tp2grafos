@@ -21,8 +21,10 @@ public class Main {
 		Graph graph = readGraph("/home/lucmir/development/workspace/tp2grafos/inputs/karate.dat", numVertexs);
 		
 		IGraphSearcher searcher = new BFSearcher();
-		ArrayList<ArrayList<Edge>> minPaths = searcher.search(graph, 0);
-		System.out.println(minPaths);
+		CommunitySearcher communitySearcher = new CommunitySearcher(searcher);
+		Map<Integer, Integer> nodeCommunityMap = communitySearcher.findCommunities(graph, -1);
+
+		System.out.println(nodeCommunityMap);
 	}
 	
 	/**

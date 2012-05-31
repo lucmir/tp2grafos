@@ -32,8 +32,23 @@ public class Graph {
     	return null;
     }
     
+	public void removeEdge(Integer i, Integer j) {
+		ArrayList<Integer> adjNodes = this.getAdjList(i);
+		if (adjNodes != null) {
+			int index = adjNodes.indexOf(j);
+			if (index > -1) {
+				adjNodes.remove(index);
+			}
+		}
+	}
+    
     public Integer getNumVertexs() {
     	return this.adjList.size();
     }
+
+	@Override
+	public String toString() {
+		return "Graph [adjList=" + adjList + "]";
+	}
     
 }

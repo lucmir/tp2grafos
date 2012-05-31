@@ -5,21 +5,6 @@ import java.util.Queue;
 
 public class BFSearcher implements IGraphSearcher {
     
-	/*
-		1  procedure BFS(G,v):
-		2      create a queue Q
-		3      enqueue v onto Q
-		4      mark v
-		5      while Q is not empty:
-		6          t ← Q.dequeue()
-		7          if t is what we are looking for:
-		8              return t
-		9          for all edges e in G.incidentEdges(t) do
-		10             o ← G.opposite(t,e)
-		11             if o is not marked:
-		12                  mark o
-		13                  enqueue o onto Q
-	*/
 	@Override
 	public ArrayList<ArrayList<Edge>> search(Graph graph, Integer startNode) {
 		Boolean visited[] = new Boolean[graph.getNumVertexs()];

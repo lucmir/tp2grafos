@@ -8,7 +8,7 @@ public class Edge {
 	
 	Integer vertexA;
 	Integer vertexB;
-
+	
 	
 	public Edge(Integer vertexA, Integer vertexB) {
 		super();
