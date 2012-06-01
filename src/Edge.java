@@ -2,7 +2,7 @@
 /**
  * Class Edge
  * 
- * Edge Representation.
+ * Edge representation.
  */
 public class Edge {
 	

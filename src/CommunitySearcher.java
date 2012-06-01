@@ -5,12 +5,18 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Map.Entry;
 
-
+/**
+ * Community Searcher class
+ * 
+ * Class with functions for community searching. 
+ * 
+ * @author lucmir
+ */
 public class CommunitySearcher {
 
 	IGraphSearcher searcher;
 	
-
+	
 	public CommunitySearcher(IGraphSearcher searcher) {
 		this.searcher = searcher;
 	}
@@ -82,7 +88,7 @@ public class CommunitySearcher {
 			if(queue.isEmpty()) {
 				communityCount++;
 				
-				// check if allNodes were visited
+				// check if all nodes were visited
 				Boolean allVisited = true;
 				for(int i=0; i<visited.length; i++) {
 					if(!visited[i]) {

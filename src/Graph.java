@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /**
  * Class Graph
  * 
- * Graph representation.
+ * Graph representation using adjacency list.
  */
 public class Graph {
     

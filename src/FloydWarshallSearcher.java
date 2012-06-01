@@ -1,79 +1,93 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FloydWarshallSearcher {
 
-	int[][] D;
-	//Node[][] P;
+/**
+ * FloydWarshallSearcher
+ * 
+ * Implements IGraphSearcher using with Floyd–Warshall based method.
+ * 
+ * @author lucmir
+ */
+public class FloydWarshallSearcher implements IGraphSearcher {
 
-	
-	/*public ArrayList<ArrayList<Edge>> search(Graph graph, Integer startNode) {
+	/**
+	 * Search implementation using Floyd–Warshall algorithm.
+	 * 
+	 * Floyd–Warshall is a graph analysis algorithm for finding shortest paths
+	 * in a weighted graph (with positive or negative edge weights).
+	 * 
+	 * The Floyd–Warshall algorithm compares all possible paths through the
+	 * graph between each pair of vertices.
+	 */
+	@Override
+	public ArrayList<ArrayList<Edge>> search(Graph graph, Integer startNode) {
+		Integer path[][] = new Integer[graph.getNumVertexs()][graph.getNumVertexs()];
+		Integer next[][] = new Integer[graph.getNumVertexs()][graph.getNumVertexs()];
+		
+		// init weight with 1 if edge exists else infinity
+		for (int i = 0; i < graph.getNumVertexs(); i++) {
+			Arrays.fill(path[i], Integer.MAX_VALUE);
+			Arrays.fill(next[i], null);
+			ArrayList<Integer> adjList = graph.getAdjList(i);
+			for(Integer node : adjList) {
+				path[i][node] = 1;
+			}
+		}
+		
+		// compute paths
 		for (int k = 0; k < graph.getNumVertexs(); k++) {
 			for (int i = 0; i <  graph.getNumVertexs(); i++) {
 				for (int j = 0; j <  graph.getNumVertexs(); j++) {
-					
-				}
-			}
-		}
-	}*/
-	/*
-	private int[][] initializeWeight(Node[] nodes, Edge[] edges) {
-		int[][] Weight = new int[nodes.length][nodes.length];
-		for (int i = 0; i < nodes.length; i++) {
-			Arrays.fill(Weight[i], Integer.MAX_VALUE);
-		}
-		for (Edge e : edges) {
-			Weight[e.from.name][e.to.name] = e.weight;
-		}
-		return Weight;
-	}
-	
-	public void calcShortestPaths(Node[] nodes, Edge[] edges) {
-		D = initializeWeight(nodes, edges);
-		P = new Node[nodes.length][nodes.length];
-
-		for (int k = 0; k < nodes.length; k++) {
-			for (int i = 0; i < nodes.length; i++) {
-				for (int j = 0; j < nodes.length; j++) {
-					if (D[i][k] != Integer.MAX_VALUE
-							&& D[k][j] != Integer.MAX_VALUE
-							&& D[i][k] + D[k][j] < D[i][j]) {
-						D[i][j] = D[i][k] + D[k][j];
-						P[i][j] = nodes[k];
+					if(path[i][k] != Integer.MAX_VALUE && path[k][j] != Integer.MAX_VALUE) {
+						Integer sum = (path[i][k]+path[k][j]);
+						if( sum < path[i][j] ) {
+							next[i][j] = k;
+							path[i][j] = sum;
+						}
 					}
 				}
 			}
 		}
-	}
-
-	public int getShortestDistance(Node source, Node target) {
-		return D[source.name][target.name];
-	}
-
-	public ArrayList<Node> getShortestPath(Node source, Node target) {
-		if (D[source.name][target.name] == Integer.MAX_VALUE) {
-			return new ArrayList<Node>();
+		
+		// get paths
+		ArrayList<ArrayList<Edge>> minPaths = new ArrayList<ArrayList<Edge>>();
+		for (int i = 0; i <  graph.getNumVertexs(); i++) {
+			ArrayList<Edge> minPathsFromI = new ArrayList<Edge>();
+			minPaths.add(minPathsFromI); 
+			
+			for (int j = 0; j <  graph.getNumVertexs(); j++) {
+				ArrayList<Integer> pathNodeList = new ArrayList<Integer>(); 
+				getMinPath(i, j, path, next, pathNodeList);
+				for(int n=0; n<pathNodeList.size()-1; n++) {
+					minPathsFromI.add(new Edge(pathNodeList.get(n), pathNodeList.get(n+1)));
+				}
+			}
+			
 		}
-		ArrayList<Node> path = getIntermediatePath(source, target);
-		path.add(0, source);
-		path.add(target);
-		return path;
+		
+		return minPaths;
 	}
-
-	private ArrayList<Node> getIntermediatePath(Node source, Node target) {
-		if (D == null) {
-			throw new IllegalArgumentException(
-					"Must call calcShortestPaths(...) before attempting to obtain a path.");
+	
+	/**
+	 * Get minimum path
+	 * 
+	 * Retrieve path recursively.
+	 */
+	private void getMinPath(Integer i, Integer j, Integer path[][], Integer next[][], ArrayList<Integer> minPaths) {
+		if(path[i][j].equals(Integer.MAX_VALUE)) {
+			return;
 		}
-		if (P[source.name][target.name] == null) {
-			return new ArrayList<Node>();
+		
+		Integer intermediate = next[i][j];
+		if(intermediate == null) {
+			return;
 		}
-		ArrayList<Node> path = new ArrayList<Node>();
-		path.addAll(getIntermediatePath(source, P[source.name][target.name]));
-		path.add(P[source.name][target.name]);
-		path.addAll(getIntermediatePath(P[source.name][target.name], target));
-		return path;
+		else {
+			getMinPath(i, intermediate, path, next, minPaths);
+			minPaths.add(intermediate);
+			getMinPath(intermediate, j, path, next, minPaths);
+		}
 	}
-*/
 
 }
