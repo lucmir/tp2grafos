@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * IGraphSearcher interface
@@ -7,6 +9,6 @@ import java.util.ArrayList;
  */
 public interface IGraphSearcher {
 	
-	public ArrayList<ArrayList<Edge>> search(Graph graph, Integer startNode);
-
+	public Map<Edge, Integer> getBetweeness(Graph graph);
+	
 }
