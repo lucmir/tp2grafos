@@ -1,0 +1,187 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{indentfirst}
+%\usepackage[alf]{bntcite}
+%\usepackage{abntex-abrev}
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\begin{document}
+
+\selectlanguage{brazil}
+\sloppy
+
+%%%%%%%%%% titulo
+\begin{center}
+\hrule
+\vspace{0.4cm}
+{\small Universidade Federal de Minas Gerais \\
+Ciência da Computação \\
+}
+\vspace{0.4cm}
+{\Large {\bf TP2: Comunidades em Grafos}\\ {\large Projeto e Análise de Algoritmos}\\} 
+ \vspace{0.6cm}
+{\normalsize {\bf Lucas Cunha de Oliveira Miranda}\\{\small lucmir@dcc.ufmg.br}}
+\end{center}
+
+
+\hrule
+\vspace{0.2cm}
+
+\section{Proposta}
+
+O Trabalho Prático propõe a implementação e análise de algoritmos para busca de comunidades em grafos. 
+Uma comunidade é um subconjunto de vértices que apresentam ligações mais densas.
+Os algoritmos implementados devem ser baseados no conceito de {\it centralidade} de uma aresta.
+A centralidade de uma aresta correponde ao número de caminhos mínimos que passam por ela.
+Os algoritmos para obtenção de caminhos mínimos {\it BFS} e {\it Floyd-Warshall} devem ser implementados como parte da solução.
+
+\section{Solução}
+
+O problema de encontrar comunidades em grafos foi solucionado pelo uso de um método inspirado no trabalho de {\it Girvan Newman} \cite{girvannewman}.
+O {\it Algoritmo de Girvan Newman} é um método proposto para detecção de comunidades...
+baseado no conceito de centralidade ({\it betweenness}) %cite
+pseudocódigo
+
+O algoritmo \ref{algoritmo1} resume a solução detalhada.
+
+\begin{algorithm}[!h]
+\begin{small}
+ \caption{Método baseado no Algoritmo de {\it Girvan Newman}}
+ 	\begin{algorithmic}[1]
+        \STATE calcule centralidade para todas as arestas do grafo
+	\WHILE{número de comunidades no grafo é igual ao desejado}
+	      \STATE remova aresta com maior centralidade
+	      \STATE recalcule a centralidade para arestas afetadas
+        \ENDWHILE
+        \RETURN comunidades do grafo
+        
+ 	\end{algorithmic}
+\label{algoritmo1} 
+\end{small}
+\end{algorithm}
+
+
+\subsection{Solução por Breadth First Search}
+
+\begin{small}
+\begin{verbatim}
+1  procedure BFS(G,v):
+2      create a queue Q
+3      enqueue v onto Q
+4      mark v
+5      while Q is not empty:
+6          t ? Q.dequeue()
+7          if t is what we are looking for:
+8              return t
+9          for all edges e in G.incidentEdges(t) do
+10             o ? G.opposite(t,e)
+11             if o is not marked:
+12                  mark o
+13                  enqueue o onto Q
+\end{verbatim}
+\end{small}
+
+\subsection{Solução por Floyd Warshall}
+
+\begin{small}
+\begin{verbatim}
+ 1 /* Assume a function edgeCost(i,j) which returns the cost of the edge from i to j
+ 2    (infinity if there is none).
+ 3    Also assume that n is the number of vertices and edgeCost(i,i) = 0
+ 4 */
+ 5
+ 6 int path[][];
+ 7 /* A 2-dimensional matrix. At each step in the algorithm, path[i][j] is the shortest path
+ 8    from i to j using intermediate vertices (1..k?1).  Each path[i][j] is initialized to
+ 9    edgeCost(i,j).
+10 */
+11
+12 procedure FloydWarshall ()
+13    for k := 1 to n
+14       for i := 1 to n
+15          for j := 1 to n
+16             path[i][j] = min ( path[i][j], path[i][k]+path[k][j] );
+\end{verbatim}
+\end{small}
+
+\subsection{Complexidade}
+
+Considerando um grafo $G$ com $v = |V|$ vértices e $n = |A|$ arestas.
+
+Para a {\bf Solução por Breadth First Search}...
+
+Para a {\bf Solução por Floyd Warshall}...
+
+
+\section{Implementação}
+
+A solução para o problema proposto foi implementada na linguagem {\it Java} e plataforma {\it Linux}. Os arquivos do diretório {\it src} contêm o código da implementação. 
+
+Antes de executar os código, é necessário compilá-los, pelo comando:
+\begin{small}
+\begin{verbatim}
+                javac -d ./bin *.java
+\end{verbatim}
+\end{small}
+Alternativamente, pode ser usado o programa {\it Makefile}. O seguinte comando executa a compilação:
+\begin{small}
+\begin{verbatim}
+                make
+\end{verbatim}
+\end{small}
+Os arquivos compilados (com extensão {\it .class} serão gerados no diretório {\it bin}).
+
+Para executar o programa, é necessário passar os seguintes parâmetros:
+\begin{itemize}
+ \item arquivo contendo as arestas do grafo
+ \item número de {\it comunidades} que serão obtidas
+ \item número de vértices
+ \item algoritmo usado:
+  \begin{itemize}
+      \item b: Breadth First Search
+      \item f: Floyd Warshall
+  \end{itemize}
+\end{itemize}
+A execução é feita pelo comando (no diretório {\it bin}):
+\begin{small}
+\begin{verbatim}
+    java Main <arquivo_arestas> <num_comunidades> 
+	      <num_vertices> <algoritmo: b|f>
+\end{verbatim}
+\end{small}
+Em execuções com arquivos de entrada muito grandes, talvez seja necessário aumentar o tamanho em memória disponível para a Máquina Virtual Java.
+Os parâmetros {\it Xmx} e {\it Xms} são adicionados, neste caso. Um exemplo de execução usando estes parâmetros é:
+\begin{small}
+\begin{verbatim}
+    java Main -Xmx1024m -Xms1024m <arquivo_arestas> <num_comunidades>
+                                  <num_vertices> <algoritmo: b|f>
+\end{verbatim}
+\end{small}
+
+O código que implementa a solução foi compilado e executado corretamente na máquina {\it jaguar}, do departamento de computação.
+
+\section{Análise Experimental}
+
+Para verificar o comportamento do algoritmo, foram realizados alguns experimentos. 
+Foi usado um {\it script} gerador de entradas (grafos e categorias) aleatórias segundo o padrão definido na especificação.
+Foram geradas entradas variando o número de vértices (e, consequentemente, o número de arestas) e deixando o número de {\it clusters} fixo (em 100).
+Posteriormente, foi analisada a influência do parâmetro número de {\it clusters} no desempenho do algoritmo.
+O número de vértices foi variado de 1000 a 4500. O gráfico seguinte apresenta os resultados obtidos: 
+
+\begin{small}
+\bibliographystyle{plain}
+\bibliography{doc}
+\end{small}
+
+\end{document}

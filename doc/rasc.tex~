@@ -1,0 +1,195 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{indentfirst}
+%\usepackage[alf]{bntcite}
+%\usepackage{abntex-abrev}
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\begin{document}
+
+\selectlanguage{brazil}
+\sloppy
+
+%%%%%%%%%% titulo
+\begin{center}
+\hrule
+\vspace{0.4cm}
+{\small Universidade Federal de Minas Gerais \\
+Ciência da Computação \\
+}
+\vspace{0.4cm}
+{\Large {\bf TP2: Clusterização em Grafos}\\ {\large Projeto e Análise de Algoritmos}\\} 
+ \vspace{0.6cm}
+{\normalsize {\bf Lucas Cunha de Oliveira Miranda}\\{\small lucmir@dcc.ufmg.br}}
+\end{center}
+
+
+\hrule
+\vspace{0.2cm}
+
+\section{Proposta}
+
+O Trabalho Prático propõe a implementação e análise de um algoritmo para encontrar grupos ({\it clusters}) de itens semelhantes em uma base do site {\it LastFM}.
+O algoritmo a ser desenvolvido deve realizar agrupamentos aplicando um método baseado em árvores geradoras mínimas (AGM). %\cite comerme.
+Além de fazer agrupamentos, o programa implementado deve gerar a contagem de itens de cada categoria que foram agrupados pelo algoritmo.
+
+\section{Solução}
+
+Para solucionar o problema de agrupar itens semelhantes da base de dados do site {\it LastFM}, implementou-se um método de {\it clustering} baseado em árvores geradoras mínimas \cite{mst}.
+
+Um subgrafo gerador de um grafo $G=(V,E)$ é um grafo $G_1=(V,E_1)$ que possui os mesmos vértices de $G$. Quando o subgrafo gerador é uma árvore, ele recebe o nome de árvore geradora. Seja $G=(V,E)$ um grafo conexo onde cada aresta $e$ possui um peso $p(e)$, denomina-se peso de uma árvore geradora $T=(V,E_T)$ de $G$ a soma dos pesos das arestas $E_T$. Uma árvore geradora mínima é a árvore geradora de $G$ que possui peso mínimo dentre todas as árvore geradoras de $G$.
+
+O problema de se encontrar uma árvore geradora mínima para um grafo $G$ conexo pode ser colocado formalmente da seguinte forma:\\
+Deseja-se encontrar um subconjunto tal que:
+\begin{itemize}
+\item $(V,E_T)$ seja uma árvore;
+\item $\sum{e \in E_T}p(e)$ seja mínimo.
+\end{itemize}
+
+Um algoritmo para realizar esta tarefa é o método de {\it Kruskal} \cite{cormen2001introduction, kruskalwiki}.
+Dado um grafo $G$ com $n$ vértices, a configuração inicial do algoritmo consiste em uma floresta com $n$ árvores triviais (contendo apenas um vértice), o que significa $E_T = \phi$. A cada etapa, a aresta de menor peso que une duas árvores, sem formar ciclos, é inserida em $E_T$. 
+O processo termina quando todas as árvores forem fundidas em uma só com $n-1$ arestas. 
+
+O método implementado para geração de {\it clusters} é uma adaptação do algoritmo de {\it Kruskal} \cite{kruskal}.
+O método adaptado funciona da mesma forma, executando o procedimento de unir as árvores como no método tradicional.
+Entretanto, diferente do {\it Kruskal}, as uniões são interrompidas imediatamente antes das últimas $k-1$ inserções de arestas em $E_T$, sendo $k$ o número de agrupamentos que se deseja obter.
+No fim da execução, cada conjunto, derivado de uma ou mais uniões sucessivas, constitui um dos $k$ {\it clusters}.
+
+O algoritmo \ref{algoritmo} resume a solução detalhada.
+
+\begin{algorithm}[!h]
+\begin{small}
+ \caption{Algoritmo de {\it clustering} baseado no método {\it Kruskal}}
+ 	\begin{algorithmic}[1]
+        \STATE $C$ = conjunto de $n$ {\it clusters} (cada {\it cluster} contendo um item)
+        \STATE ordena conjunto de arestas $E$ de $G$ pelo peso (ordem crescente)
+        \STATE {\it insercoes = 0}
+        \FOR{aresta $(u, v) \in E$}
+              \IF{$insercoes == (n - k)$} 
+                   \STATE {\it break}
+              \ENDIF
+              \IF{$C_u \neq C_v$} 
+                   \STATE Adicionar $C_u U C_v$ em $C$
+                   \STATE Remover $C_u$ e $C_v$ de $C$
+                   \STATE {\it insercoes++}
+              \ENDIF
+        \ENDFOR
+        \RETURN $C$
+ 	\end{algorithmic}
+\label{algoritmo} 
+\end{small}
+\end{algorithm}
+
+Para controlar quais vértices estão em cada componente, foi utilizada uma estrutura de dados conhecida como {\it Disjoint-set} (ou {\it Union and Find}) \cite{disjointset}.
+Esta estrutura funciona como um conjunto de elementos particionados em subconjuntos disjuntos (que não se interceptam).
+As operações fundamentais sobre um {\it Disjoint-set}, são:
+\begin{itemize}
+ \item {\it Find}: Retorna o subconjunto de um item.
+ \item {\it UFind}: Usa a operação {\it Find} para determinar se dois elementos estão no mesmo subconjunto
+ \item {\it Union}: Agrupa dois subconjuntos em um único subconjunto.
+\end{itemize}
+
+No final da geração dos {\it clusters}, o programa implementado realiza uma contagem do número de itens de cada categoria que foram atribuidos para cada agrupamento.
+
+\subsection{Complexidade}
+
+Considerando um grafo $G$ com $v = |V|$ vértices e $n = |A|$ arestas.
+A primeira operação do algoritmo é a ordenação do conjunto de arestas, que pode ser executada com custo $O(n log n)$.
+
+O algoritmo original {\it Kruskal} obtém a AGM com custo $O(n log n)$, sendo $n$ o número de arestas do grafo original.
+O método analisa cada aresta do grafo, executando duas operações de {\it Find} e, possivelmente, uma união.
+A operação {\it Find} busca a raíz de um item recursivamente em uma árvore, podendo custar $O(1)$, no melhor caso, e $O(log v)$, no pior.
+A operação {\it Union} faz a junção de dois conjuntos em tempo constante ($O(1)$).
+Como este procedimento é realizado para cada aresta do grafo, o custo total é $O(n)$, no melhor caso, e $O(n log v)$, no pior.
+Como na formação de uma AGM, $n$ é, no máximo, igual a $v^2$ (logo, $log v^2 = 2 log v = O(log v)$) e, ignorando vértices isolados, $v \leq n + 1$ ($log v = log n$), a complexidade geral pode ser tomada como $O(n log n)$, no pior caso.
+
+Se o algoritmo original fosse executado, todas as $(n-1)$arestas da AGM seriam inseridas.
+Porém, o algoritmo adaptado para a solução do problema proposto encerra as inserções na aresta $k-1$, sendo $k$ o número de {\it clusters} desejados.
+Dessa forma, são inseridas $(n-1)-(k-1)=n-k$ arestas.
+No melhor caso, portanto, todas as buscas ocorrem em $O(1)$ e a iteração sobre as arestas se repete $(n-k)$ vezes.
+Portanto o algoritmo é, no melhor caso $O(n-k)$ (se o conjunto de arestas já tiver ordenado).
+O pior caso corresponde ao do algoritmo original, que é $O(n log n)$.
+
+
+\section{Implementação}
+
+A solução para o problema proposto foi implementada na linguagem {\it Java} e plataforma {\it Linux}. Os arquivos do diretório {\it src} contêm o código da implementação. 
+
+Antes de executar os código, é necessário compilá-los, pelo comando:
+\begin{small}
+\begin{verbatim}
+                javac -d ./bin *.java
+\end{verbatim}
+\end{small}
+Alternativamente, pode ser usado o programa {\it Makefile}. O seguinte comando executa a compilação:
+\begin{small}
+\begin{verbatim}
+                make
+\end{verbatim}
+\end{small}
+Os arquivos compilados (com extensão {\it .class} serão gerados no diretório {\it bin}).
+
+Para executar o programa, é necessário passar os seguintes parâmetros:
+\begin{itemize}
+ \item arquivo contendo as arestas do grafo
+ \item arquivo contendo as categorias para cada vértice do grafo
+ \item número de {\it clusters}
+ \item número de vértices
+\end{itemize}
+A execução é feita pelo comando (no diretório {\it bin}):
+\begin{small}
+\begin{verbatim}
+    java Main <arquivo_arestas> <arquivo_estilos> <numClusters>
+              <numVertices>
+\end{verbatim}
+\end{small}
+Em execuções com arquivos de entrada muito grandes, talvez seja necessário aumentar o tamanho em memória disponível para a Máquina Virtual Java.
+Os parâmetros {\it Xmx} e {\it Xms} são adicionados, neste caso. Um exemplo de execução usando estes parâmetros é:
+\begin{small}
+\begin{verbatim}
+    java Main -Xmx1024m -Xms1024m <arquivo_arestas> <arquivo_estilos>
+               <numClusters> <numVertices>
+\end{verbatim}
+\end{small}
+
+O código que implementa a solução foi compilado e executado corretamente na máquina {\it jaguar}, do departamento de computação.
+
+\section{Análise Experimental}
+
+Para verificar o comportamento do algoritmo, foram realizados alguns experimentos. 
+Foi usado um {\it script} gerador de entradas (grafos e categorias) aleatórias segundo o padrão definido na especificação.
+Foram geradas entradas variando o número de vértices (e, consequentemente, o número de arestas) e deixando o número de {\it clusters} fixo (em 100).
+Posteriormente, foi analisada a influência do parâmetro número de {\it clusters} no desempenho do algoritmo.
+O número de vértices foi variado de 1000 a 4500. O gráfico seguinte apresenta os resultados obtidos: 
+
+\begin{center}
+\includegraphics{results.png}
+\end{center}
+
+Pela curva do gráfico, nota-se que, com o aumento do número de vértices, o tempo de execução também aumenta.
+Observando o comportamento da curva, é possível perceber que este aumento é maior que o de uma curva linear e menor que o de uma curva de uma função quadrática.
+Este comportamento está dentro do previsto pelo cálculo da complexidade do algoritmo.
+
+Outro experimento realizado foi o de variar o parâmetro número de {\it clusters} gerados pelo algoritmo, fixando os demais parâmetros.
+O experimento foi executado para valores de 100 a 4000 (número de {\it clusters}), para um grafo, gerado aleatoriamente, com 4000 vértices.
+Observou-se que o tempo de execução ficou muito próximo de 2 minutos independente da variação realizada.
+Ou seja, o número de {\it clusters} a ser gerados não afeta significativamente o desempenho do algoritmo.
+
+
+\begin{small}
+\bibliographystyle{plain}
+\bibliography{doc}
+\end{small}
+
+\end{document}
