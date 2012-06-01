@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -12,6 +14,8 @@ import java.util.Arrays;
 public class FloydWarshallSearcher implements IGraphSearcher {
 
 	/**
+	 * Get Betweeness for all edges.
+	 * 
 	 * Search implementation using Floyd–Warshall algorithm.
 	 * 
 	 * Floyd–Warshall is a graph analysis algorithm for finding shortest paths
@@ -21,7 +25,9 @@ public class FloydWarshallSearcher implements IGraphSearcher {
 	 * graph between each pair of vertices.
 	 */
 	@Override
-	public ArrayList<ArrayList<Edge>> search(Graph graph, Integer startNode) {
+	public Map<Edge, Integer> getBetweeness(Graph graph)  {
+		Map<Edge, Integer> edgeBetweennessMap = new HashMap<Edge, Integer>();
+		
 		Integer path[][] = new Integer[graph.getNumVertexs()][graph.getNumVertexs()];
 		Integer next[][] = new Integer[graph.getNumVertexs()][graph.getNumVertexs()];
 		
@@ -50,23 +56,26 @@ public class FloydWarshallSearcher implements IGraphSearcher {
 			}
 		}
 		
-		// get paths
-		ArrayList<ArrayList<Edge>> minPaths = new ArrayList<ArrayList<Edge>>();
-		for (int i = 0; i <  graph.getNumVertexs(); i++) {
-			ArrayList<Edge> minPathsFromI = new ArrayList<Edge>();
-			minPaths.add(minPathsFromI); 
-			
-			for (int j = 0; j <  graph.getNumVertexs(); j++) {
+		for (int i = 0; i <  graph.getNumVertexs()-1; i++) {
+			for (int j = i+1; j <  graph.getNumVertexs(); j++) {
 				ArrayList<Integer> pathNodeList = new ArrayList<Integer>(); 
 				getMinPath(i, j, path, next, pathNodeList);
 				for(int n=0; n<pathNodeList.size()-1; n++) {
-					minPathsFromI.add(new Edge(pathNodeList.get(n), pathNodeList.get(n+1)));
+					if(pathNodeList.get(n) != pathNodeList.get(n+1)) {
+						// count paths
+						Edge edgeInPath = new Edge(pathNodeList.get(n), pathNodeList.get(n+1));
+						Integer count = 1;
+						if(edgeBetweennessMap.containsValue(edgeInPath)) {
+							count += edgeBetweennessMap.get(edgeInPath);
+						}
+						edgeBetweennessMap.put(edgeInPath, count);
+					}
 				}
 			}
 			
 		}
 		
-		return minPaths;
+		return edgeBetweennessMap;
 	}
 	
 	/**
@@ -81,7 +90,8 @@ public class FloydWarshallSearcher implements IGraphSearcher {
 		
 		Integer intermediate = next[i][j];
 		if(intermediate == null) {
-			return;
+			minPaths.add(i);
+			minPaths.add(j);
 		}
 		else {
 			getMinPath(i, intermediate, path, next, minPaths);

@@ -21,44 +21,6 @@ public class CommunitySearcher {
 		this.searcher = searcher;
 	}
 	
-	/**
-	 * Calculate Betweenness
-	 * 
-	 * Calculate the betweenness of all existing edges in the network.
-	 * 
-	 * @param	graph object
-	 * 
-	 * @return	edge betweenness map
-	 */
-	private Map<Edge, Integer> calculateBetweenness(Graph graph) {
-		
-		Map<Edge, Integer> edgeBetweennessMap = new HashMap<Edge, Integer>();
-		
-		for(Integer node=0; node<graph.getNumVertexs(); node++) {
-			
-			if(graph.getAdjList(node).size() > 0) {
-				
-				ArrayList<ArrayList<Edge>> minPaths = searcher.search(graph, node);
-				
-				// count how many times each edge is in path
-				for(Integer i=0; i<minPaths.size(); i++) {
-					ArrayList<Edge> pathList = minPaths.get(i);
-					for(Integer j=0; j<pathList.size(); j++) {
-						Edge edgeInPath = pathList.get(j);
-						Integer count = 1;
-						if(edgeBetweennessMap.containsValue(edgeInPath)) {
-							count += edgeBetweennessMap.get(edgeInPath);
-						}
-						edgeBetweennessMap.put(edgeInPath, count);
-					}
-				}
-				
-			}
-			
-		}
-		
-		return edgeBetweennessMap;
-	}
 	
 	/**
 	 * Get Communities
@@ -148,7 +110,7 @@ public class CommunitySearcher {
 				return nodeCommunityMap;
 			}
 			
-			Map<Edge, Integer> edgeBetweennessMap = this.calculateBetweenness(graph);
+			Map<Edge, Integer> edgeBetweennessMap = searcher.getBetweeness(graph);
 			
 			// get the edge with the highest betweenness
 			Integer highestBetweeness = 0;
