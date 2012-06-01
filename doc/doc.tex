@@ -49,9 +49,15 @@ Os algoritmos para obtenção de caminhos mínimos {\it BFS} e {\it Floyd-Warshall}
 \section{Solução}
 
 O problema de encontrar comunidades em grafos foi solucionado pelo uso de um método inspirado no trabalho de {\it Girvan Newman} \cite{girvannewman}.
-O {\it Algoritmo de Girvan Newman} é um método proposto para detecção de comunidades...
-baseado no conceito de centralidade ({\it betweenness}) %cite
-pseudocódigo
+O {\it Algoritmo de Girvan Newman} é um método proposto para detecção de comunidades em redes (grafos).
+Uma comunidade consiste em um subconjunto de nodos ligados por uma densidade grande de arestas.
+O método usado é baseado no conceito de centralidade ({\it betweenness}). %cite
+Para uma aresta $i$, a {\it centralidade} é definida como o número de caminhos mínimos entre pares de vértices que passam por $i$.
+A {\it centralidade} de uma aresta é uma métrica que indica sua influência na estrutura da rede.
+Com base nesta ideia, o algoritmo de {\it Givan Newman} propõe uma abordagem iterativa para detectar comunidades.
+Primeiramente, calcula-se a {\it centralidade} de cada aresta. Em seguida, a aresta com maior valor da métrica calculada é removida.
+Após a remoção, verifica-se o número de comunidades existentes na nova configuração do grafo.
+O processo é repetido sucessivamente, recalculando os valores de {\it centralidade} e removendo arestas, até que o grafo resultante contenha o número de comunidades desejado.
 
 O algoritmo \ref{algoritmo1} resume a solução detalhada.
 
@@ -65,34 +71,95 @@ O algoritmo \ref{algoritmo1} resume a solução detalhada.
 	      \STATE recalcule a centralidade para arestas afetadas
         \ENDWHILE
         \RETURN comunidades do grafo
-        
  	\end{algorithmic}
 \label{algoritmo1} 
 \end{small}
 \end{algorithm}
 
+Foram feitas duas implementações do algoritmo de {\it Girvan Newman}. As implementações seguiram o algoritmo \ref{algoritmo1}, variando apenas o método para cálculo dos caminhos mínimos 
+(necessário para determinar a centralidade das arestas). Foram adotados os algoritmos para obtenção de caminhos mínimos {\it Breadth First Search} e {\it Floyd Warshall}.
 
-\subsection{Solução por Breadth First Search}
+\subsection{Solução por {\it Breadth First Search}}
 
+{\it Breadth First Search} (ou {\it busca em largura}), em teoria de grafos, é um algoritmo para execução de buscas em árvores. 
+O método expande e examina sistematicamente todos os nós da árvore. 
+Todos os nós filhos obtidos pela expansão de um nó são adicionados a uma fila (FIFO).
+Os nós examinados são retirados da fila e marcados.
+O algoritmo é aplicado para obtenção do caminho mínimo entre pares de vértices, como detalhado no algoritmo \ref{algoritmo2}.
+
+\begin{algorithm}[!h]
 \begin{small}
+ \caption{Algoritmo {\it Breadth First Search}}
+ 	\begin{algorithmic}[1]
+        \STATE 
+	\WHILE{número de comunidades no grafo é igual ao desejado}
+	      \STATE remova aresta com maior centralidade
+	      \STATE recalcule a centralidade para arestas afetadas
+        \ENDWHILE
+        \RETURN comunidades do grafo
+
+	\STATE escolha uma raiz $s$ de $G$
+	\STATE marque $s$
+	\STATE insira $s$ na fila $F$
+	\WHILE {$F$ não está vazia faça}
+      		\STATE seja $v$ o primeiro vértice de $F$
+		\FOR{$w$ \in listaDeAdjacência de $v$}
+		        \IF{$w$ não está marcado então}
+		            \STATE visite aresta entre $v$ e $w$
+	        	    \STATE marque $w$
+		            \STATE insira $w$ em $F$
+		         \ELSE
+				\IF {$w$ \in $F$}
+		        	    \STATE visite aresta entre v e w
+	         		\ENDIF
+			\ENDIF
+		\ENDFOR
+      		\STATE retira v de F
+      \ENDWHILE
+ 	\end{algorithmic}
+\label{algoritmo2} 
+\end{small}
+\end{algorithm}
+\begin{small}
+
+A implementação usou lista de adjascência, onde cada vértice contém uma lista de outros nodos associada...
 \begin{verbatim}
 1  procedure BFS(G,v):
 2      create a queue Q
 3      enqueue v onto Q
 4      mark v
 5      while Q is not empty:
-6          t ? Q.dequeue()
+6          t = Q.dequeue()
 7          if t is what we are looking for:
 8              return t
 9          for all edges e in G.incidentEdges(t) do
-10             o ? G.opposite(t,e)
+10             o = G.opposite(t,e)
 11             if o is not marked:
 12                  mark o
 13                  enqueue o onto Q
 \end{verbatim}
+
 \end{small}
 
 \subsection{Solução por Floyd Warshall}
+
+\begin{algorithm}[!h]
+\begin{small}
+ \caption{Algoritmo {\it Floyd Warshall}}
+ 	\begin{algorithmic}[1]
+        \STATE inicializa a matriz ($n x n$) $path$ com 1 para arestas existentes e $INF$ caso contrário
+	\FOR{$k=0$ \TO $n$}
+		\FOR{$i=0$ \TO $n$}
+			\FOR{$j=0$ \TO $n$}
+				\STATE $sum=path[i][k] + path[k][j]$
+	      			\STATE $path[i][j] = min(path[i][j], sum)$
+			\ENDFOR
+		\ENDFOR
+	\ENDFOR
+ 	\end{algorithmic}
+\label{algoritmo2} 
+\end{small}
+\end{algorithm}
 
 \begin{small}
 \begin{verbatim}
