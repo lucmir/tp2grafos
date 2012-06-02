@@ -1,7 +1,15 @@
 \begin{thebibliography}{1}
 
+\bibitem{bfsa}
+Breadth first search algorithm.
+\newblock http://en.wikipedia.org/wiki/Breadth-first\_search.
+
+\bibitem{fwa}
+Floyd warshall algorithm.
+\newblock http://en.wikipedia.org/wiki/Floyd-Warshall\_algorithm.
+
 \bibitem{girvannewman}
 Girvan newman algorithm.
-\newblock http://en.wikipedia.org/wiki/Girvan%E2%80%93Newman_algorithm.
+\newblock http://en.wikipedia.org/wiki/Girvan-Newman\_algorithm.
 
 \end{thebibliography}

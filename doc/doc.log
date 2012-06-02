@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.5)  1 JUN 2012 21:15
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.5)  1 JUN 2012 22:57
 entering extended mode
  %&-line parsing enabled.
 **doc.tex
@@ -258,8 +258,8 @@ landscape: --
 twocolumn: --
 twoside: --
 asymmetric: --
-h-parts: 71.13188pt, 455.24411pt, 71.13188pt
-v-parts: 71.13188pt, 702.78308pt, 71.13188pt
+h-parts: 65.44142pt, 466.62503pt, 65.44142pt
+v-parts: 68.28644pt, 711.31898pt, 65.44142pt
 hmarginratio: --
 vmarginratio: --
 lines: --
@@ -273,11 +273,11 @@ driver: pdftex
 -------------------- Page layout dimensions and switches
 \paperwidth  597.50787pt
 \paperheight 845.04684pt
-\textwidth  455.24411pt
-\textheight 702.78308pt
-\oddsidemargin  -1.1381pt
-\evensidemargin -1.1381pt
-\topmargin  -38.1381pt
+\textwidth  466.62503pt
+\textheight 711.31898pt
+\oddsidemargin  -6.82857pt
+\evensidemargin -6.82857pt
+\topmargin  -40.98355pt
 \headheight 12.0pt
 \headsep    25.0pt
 \footskip   30.0pt
@@ -311,43 +311,59 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 84.
- [2] [3]
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 193.
 
 
-(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[2]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 186.
+
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 207.
+Underfull \hbox (badness 1009) in paragraph at lines 190--192
+\OT1/ptm/m/n/12 Alternativamente, pode ser usado o pro-grama \OT1/ptm/m/it/12 M
+a-ke-file\OT1/ptm/m/n/12 . O se-guinte co-mando exe-cuta a
+ []
 
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 200.
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 207.
- (./doc.bbl) [4]
-(./doc.aux) ) 
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 200.
+ [3]
+<results.png, id=21, 361.35pt x 252.945pt>
+File: results.png Graphic file (type png)
+ <use results.png>
+<results2.png, id=22, 361.35pt x 252.945pt>
+File: results2.png Graphic file (type png)
+ <use results2.png> [4 <./results.png (PNG copy)>] (./doc.bbl) [5 <./results2.p
+ng (PNG copy)>] (./doc.aux) ) 
 Here is how much of TeX's memory you used:
- 3152 strings out of 495041
- 39383 string characters out of 1181898
- 102707 words of memory out of 3000000
- 6268 multiletter control sequences out of 15000+50000
+ 3167 strings out of 495041
+ 39577 string characters out of 1181898
+ 104718 words of memory out of 3000000
+ 6280 multiletter control sequences out of 15000+50000
  27067 words of font info for 61 fonts, out of 3000000 for 9000
  30 hyphenation exceptions out of 8191
- 32i,5n,24p,233b,708s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/
-texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texli
-ve/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/a
-msfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
-mr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
-sr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-tex
-live/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
-/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on doc.pdf (4 pages, 128710 bytes).
+ 32i,5n,24p,233b,706s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.
+enc}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/s
+hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-
+texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/font
+s/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
+cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/
+texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-texliv
+e/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/
+times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></u
+sr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on doc.pdf (5 pages, 165117 bytes).
 PDF statistics:
- 56 PDF objects out of 1000 (max. 8388607)
+ 73 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

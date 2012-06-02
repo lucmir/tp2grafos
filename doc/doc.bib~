@@ -7,10 +7,10 @@
 
 
 @misc{girvannewman,
-  title = "Girvan Newman",
-  key = "Girvan Newman",
-  url = "http://en.wikipedia.org/wiki/Girvan%E2%80%93Newman_algorithm",
-  note = "http://en.wikipedia.org/wiki/Girvan%E2%80%93Newman_algorithm"
+  title = "Girvan Newman Algorithm",
+  key = "Girvan Newman Algorithm",
+  url = "http://en.wikipedia.org/wiki/Girvan-Newman\_algorithm",
+  note = "http://en.wikipedia.org/wiki/Girvan-Newman\_algorithm"
 }
 
 @misc{convexhull,
@@ -34,18 +34,18 @@
   note = "http://en.wikipedia.org/wiki/Minimum\_spanning\_tree",
 }
 
-@misc{kruskal,
-  title = "Algoritmo de Kruskal",
-        key = "Algoritmo de Kruskal",
-        url = "http://www.ime.usp.br/~pf/algoritmos\_para\_grafos/aulas/kruskal.html",
-        note = "http://www.ime.usp.br/~pf/algoritmos\_para\_grafos/aulas/kruskal.html",
+@misc{bfsa,
+  title = "Breadth First Search Algorithm",
+        key = "Breadth First Search Algorithm",
+        url = "http://en.wikipedia.org/wiki/Breadth-first\_search",
+        note = "http://en.wikipedia.org/wiki/Breadth-first\_search",
 }
 
-@misc{spoj,
-  title = "SPOJ",
-        key = "SPOJ",
-        url = "http://spoj.pl/problems/MENU",
-        note = "http://spoj.pl/problems/MENU"
+@misc{fwa,
+  title = "Floyd Warshall algorithm",
+        key = "Floyd–Warshall algorithm",
+        url = "http://en.wikipedia.org/wiki/Floyd-Warshall\_algorithm",
+        note = "http://en.wikipedia.org/wiki/Floyd-Warshall\_algorithm"
 }
 
 @article{bertsekas1995dynamic,

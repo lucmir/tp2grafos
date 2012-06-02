@@ -14,7 +14,7 @@
 %\usepackage[alf]{bntcite}
 %\usepackage{abntex-abrev}
 \usepackage{geometry}
-\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\geometry{a4paper,left=2.3cm,right=2.3cm,top=2.3cm,bottom=2.3cm}
 
 \begin{document}
 
@@ -83,7 +83,7 @@ Foram feitas duas implementações do algoritmo de {\it Girvan Newman}. As impleme
 
 \subsection{Solução por {\it Breadth First Search}}
 
-{\it Breadth First Search} (ou {\it busca em largura}), em teoria de grafos, é um algoritmo para execução de buscas em árvores. 
+{\it Breadth First Search} (ou {\it busca em largura}), em teoria de grafos, é um algoritmo para execução de buscas em árvores \cite{bfsa}. 
 O método expande e examina sistematicamente todos os nós da árvore. 
 Todos os nós filhos obtidos pela expansão de um nó são adicionados a uma fila (FIFO).
 Os nós examinados são retirados da fila e marcados.
@@ -126,7 +126,7 @@ O algoritmo é aplicado para obtenção do caminho mínimo entre pares de vértices, 
 
 \subsection{Solução por Floyd Warshall}
 
-O algoritmo de {\it Floyd Warshall} é um método usado no cálculo do caminho mais curto entre todos os pares de vértices em um grafo orientado (com direção) e valorado (com peso).
+O algoritmo de {\it Floyd Warshall} é um método usado no cálculo do caminho mais curto entre todos os pares de vértices em um grafo orientado (com direção) e valorado (com peso) \cite{fwa}.
 O algoritmo pode ser adaptado para grafos não orientados e não valorados (replicando as arestas direcionadas e atribuindo pesos iguais para as arestas).
 
 O algoritmo recebe como entrada uma matriz de adjacência que representa o grafo. 
@@ -178,7 +178,10 @@ Por fim, resta a operação de verificar quantas comunidades existem e de identifi
 Para isso, é feita uma busca em largura no grafo. Quando um vértice é visitado, este é marcado.
 Se ao fim da busca, algum vértice não recebeu a marcação, significa que este faz parte de outra comunidade.
 O processo é repetido para o vértice desmarcado, e assim, sucessivamente, até que todos os vértices estejam marcado e as comunidades identificadas.
-O custo de efetuar este procedimento é $O(|E|+|V|)$, já que todos os vértices e arestas são visitados.
+O custo de efetuar este procedimento é $O(|E|+|V|)$, já que todos os vértices e arestas são visitados).
+
+A complexidade do algoritmo todo corresponde ao custo (que prevalece) de se computar os valores de centralidade para todas as arestas, que é $O(|V|^3)$.
+
 
 
 \section{Implementação}
@@ -217,24 +220,38 @@ A execução é feita pelo comando (no diretório {\it bin}):
 	      <num_vertices> <algoritmo: b|f>
 \end{verbatim}
 \end{small}
-Em execuções com arquivos de entrada muito grandes, talvez seja necessário aumentar o tamanho em memória disponível para a Máquina Virtual Java.
-Os parâmetros {\it Xmx} e {\it Xms} são adicionados, neste caso. Um exemplo de execução usando estes parâmetros é:
-\begin{small}
-\begin{verbatim}
-    java Main -Xmx1024m -Xms1024m <arquivo_arestas> <num_comunidades>
-                                  <num_vertices> <algoritmo: b|f>
-\end{verbatim}
-\end{small}
 
 O código que implementa a solução foi compilado e executado corretamente na máquina {\it jaguar}, do departamento de computação.
 
 \section{Análise Experimental}
 
-Para verificar o comportamento do algoritmo, foram realizados alguns experimentos. 
-Foi usado um {\it script} gerador de entradas (grafos e categorias) aleatórias segundo o padrão definido na especificação.
-Foram geradas entradas variando o número de vértices (e, consequentemente, o número de arestas) e deixando o número de {\it clusters} fixo (em 100).
-Posteriormente, foi analisada a influência do parâmetro número de {\it clusters} no desempenho do algoritmo.
-O número de vértices foi variado de 1000 a 4500. O gráfico seguinte apresenta os resultados obtidos: 
+Para verificar o comportamento dos algoritmos, foram realizados alguns experimentos. 
+Foi usado um {\it script} gerador de entradas aleatórias segundo o padrão definido na especificação (o {\it script} foi disponibilizado pelos monitores da disciplina).
+Foram geradas entradas variando o número de vértices (e, consequentemente, o número de arestas) e fixando o número de {\it comunidades} geradas (em 10).
+
+Primeiramente, gerou-se um grafo denso, a partir da função de distribuição de arestas $|E| = \frac{|V|^2}{1.5})$. 
+O número de vértices foi variado de 10 à 100. O gráfico seguinte apresenta os resultados obtidos para as duas soluções:
+
+\begin{center}
+\includegraphics{results.png}
+\end{center} 
+
+Outro experimento executado foi a geração de um grafo esparso, a partir de uma função de distribuição seguindo uma {\it power law}.
+O número de vértices foi variado de 100 à 300. O gráfico seguinte apresenta os resultados obtidos para as duas soluções:
+
+\begin{center}
+\includegraphics{results2.png}
+\end{center} 
+
+Pela observação dos dois gráficos, é fácil constatar que o algoritmo de {\it Floyd Warshall} foi mais eficiente para todos os testes.
+Uma justificativa para isso é que o algoritmo BFS não possui a vantagem do reaproveitamento de cálculos, concedida pela programação dinâmica.
+
+Apesar das diferenças de tempo de execução, o comportamento das curvas dos dois algoritmos foi semelhante.
+Nota-se que as curvas são semelhantes a graficos originados de funções cúbicas. O que foi sugerido pelo cálculo de complexidade das soluções.
+
+Outra observação importante é que a densidade do gráfico tem muita influência no tempo de execução dos algoritmos.
+Os métodos gastaram, em média, 1000 segundos para executarem sobre um gráfico denso com 100 vértices.
+Porém, para um grafo esparso com 100 vértices, a execução foi quase que imediata.
 
 \begin{small}
 \bibliographystyle{plain}
