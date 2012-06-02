@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.5)  1 JUN 2012 02:33
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.5)  1 JUN 2012 21:15
 entering extended mode
  %&-line parsing enabled.
 **doc.tex
@@ -295,82 +295,59 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 32.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 63.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 75.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 78.
-(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (96.63522pt too wide) in paragraph at lines 115--115
-[] \OT1/pcr/m/n/10.95 1 /* Assume a function edgeCost(i,j) which returns the co
-st of the edge from i to j[] 
- []
-
-
-Overfull \hbox (17.79532pt too wide) in paragraph at lines 115--115
-[] \OT1/pcr/m/n/10.95 3    Also assume that n is the number of vertices and edg
-eCost(i,i) = 0[] 
- []
-
-
-Overfull \hbox (149.19516pt too wide) in paragraph at lines 115--115
-[] \OT1/pcr/m/n/10.95 7 /* A 2-dimensional matrix. At each step in the algorith
-m, path[i][j] is the shortest path[] 
- []
-
-
-Overfull \hbox (136.05518pt too wide) in paragraph at lines 115--115
-[] \OT1/pcr/m/n/10.95 8    from i to j using intermediate vertices (1..k?1).  E
-ach path[i][j] is initialized to[] 
- []
-
-
-Overfull \hbox (4.65533pt too wide) in paragraph at lines 115--115
-[]\OT1/pcr/m/n/10.95 16             path[i][j] = min ( path[i][j], path[i][k]+p
-ath[k][j] );[] 
- []
-
-LaTeX Font Info:    Try loading font information for U+msa on input line 120.
+LaTeX Font Info:    Try loading font information for U+msa on input line 55.
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 120.
+LaTeX Font Info:    Try loading font information for U+msb on input line 55.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 147.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 69.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 84.
+ [2] [3]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 193.
+
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 207.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 147.
- [2] (./doc.bbl) [3]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 207.
+ (./doc.bbl) [4]
 (./doc.aux) ) 
 Here is how much of TeX's memory you used:
- 3142 strings out of 495041
- 39234 string characters out of 1181898
- 100691 words of memory out of 3000000
- 6259 multiletter control sequences out of 15000+50000
- 23835 words of font info for 53 fonts, out of 3000000 for 9000
+ 3152 strings out of 495041
+ 39383 string characters out of 1181898
+ 102707 words of memory out of 3000000
+ 6268 multiletter control sequences out of 15000+50000
+ 27067 words of font info for 61 fonts, out of 3000000 for 9000
  30 hyphenation exceptions out of 8191
- 32i,4n,24p,220b,474s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 32i,5n,24p,233b,708s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/
-texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texli
-ve/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/typ
-e1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/urw/cour
-ier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr
-/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive
-/fonts/type1/urw/times/utmri8a.pfb>
-Output written on doc.pdf (3 pages, 96044 bytes).
+texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texli
+ve/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/a
+msfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/c
+mr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
+sr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-tex
+live/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
+/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on doc.pdf (4 pages, 128710 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
+ 56 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

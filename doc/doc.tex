@@ -76,6 +76,8 @@ O algoritmo \ref{algoritmo1} resume a solução detalhada.
 \end{small}
 \end{algorithm}
 
+O grafo foi representado e implementado usando a estrutura de dados lista de adjascência, onde cada vértice da lista contém uma lista associada com os identificadores dos vértices com os quais são formadas arestas.
+
 Foram feitas duas implementações do algoritmo de {\it Girvan Newman}. As implementações seguiram o algoritmo \ref{algoritmo1}, variando apenas o método para cálculo dos caminhos mínimos 
 (necessário para determinar a centralidade das arestas). Foram adotados os algoritmos para obtenção de caminhos mínimos {\it Breadth First Search} e {\it Floyd Warshall}.
 
@@ -103,13 +105,13 @@ O algoritmo é aplicado para obtenção do caminho mínimo entre pares de vértices, 
 	\STATE insira $s$ na fila $F$
 	\WHILE {$F$ não está vazia faça}
       		\STATE seja $v$ o primeiro vértice de $F$
-		\FOR{$w$ \in listaDeAdjacência de $v$}
+		\FOR{$w \in$ listaDeAdjacência de $v$}
 		        \IF{$w$ não está marcado então}
 		            \STATE visite aresta entre $v$ e $w$
 	        	    \STATE marque $w$
 		            \STATE insira $w$ em $F$
 		         \ELSE
-				\IF {$w$ \in $F$}
+				\IF {$w \in F$}
 		        	    \STATE visite aresta entre v e w
 	         		\ENDIF
 			\ENDIF
@@ -120,28 +122,23 @@ O algoritmo é aplicado para obtenção do caminho mínimo entre pares de vértices, 
 \label{algoritmo2} 
 \end{small}
 \end{algorithm}
-\begin{small}
 
-A implementação usou lista de adjascência, onde cada vértice contém uma lista de outros nodos associada...
-\begin{verbatim}
-1  procedure BFS(G,v):
-2      create a queue Q
-3      enqueue v onto Q
-4      mark v
-5      while Q is not empty:
-6          t = Q.dequeue()
-7          if t is what we are looking for:
-8              return t
-9          for all edges e in G.incidentEdges(t) do
-10             o = G.opposite(t,e)
-11             if o is not marked:
-12                  mark o
-13                  enqueue o onto Q
-\end{verbatim}
-
-\end{small}
 
 \subsection{Solução por Floyd Warshall}
+
+O algoritmo de {\it Floyd Warshall} é um método usado no cálculo do caminho mais curto entre todos os pares de vértices em um grafo orientado (com direção) e valorado (com peso).
+O algoritmo pode ser adaptado para grafos não orientados e não valorados (replicando as arestas direcionadas e atribuindo pesos iguais para as arestas).
+
+O algoritmo recebe como entrada uma matriz de adjacência que representa o grafo. 
+No caso do trabalho prático, uma matriz é contruida, atribuindo-se o valor 1 para posições representando arestas existentes e {\it infinito} para as demais.
+O valor de um caminho entre dois vértices é a soma dos valores de todas as arestas ao longo desse caminho. 
+O método calcula, para cada par de vértices, o menor de todos os caminhos entre os vértices.
+
+O algoritmo de {\it Floyd Warshall} é baseado no conceito de {\it Programação Dinâmica}.
+O cálculo de um caminho mínimo entre dois vértices é executado uma única vez.
+Sempre que um caminho já calculado faz parte de um caminho para o qual o cálculo está sendo executado, o valor já obtido é reaproveitado.
+
+O algoritmo \ref{algoritmo3} resume o que foi explicado.
 
 \begin{algorithm}[!h]
 \begin{small}
@@ -157,38 +154,34 @@ A implementação usou lista de adjascência, onde cada vértice contém uma lista de
 		\ENDFOR
 	\ENDFOR
  	\end{algorithmic}
-\label{algoritmo2} 
+\label{algoritmo3} 
 \end{small}
 \end{algorithm}
 
-\begin{small}
-\begin{verbatim}
- 1 /* Assume a function edgeCost(i,j) which returns the cost of the edge from i to j
- 2    (infinity if there is none).
- 3    Also assume that n is the number of vertices and edgeCost(i,i) = 0
- 4 */
- 5
- 6 int path[][];
- 7 /* A 2-dimensional matrix. At each step in the algorithm, path[i][j] is the shortest path
- 8    from i to j using intermediate vertices (1..k?1).  Each path[i][j] is initialized to
- 9    edgeCost(i,j).
-10 */
-11
-12 procedure FloydWarshall ()
-13    for k := 1 to n
-14       for i := 1 to n
-15          for j := 1 to n
-16             path[i][j] = min ( path[i][j], path[i][k]+path[k][j] );
-\end{verbatim}
-\end{small}
 
 \subsection{Complexidade}
 
-Considerando um grafo $G$ com $v = |V|$ vértices e $n = |A|$ arestas.
+Considerando um grafo $G$ com $v = |V|$ vértices e $n = |E|$ arestas.
+A solução proposta envolve um ciclo de iterações em que arestas são removidas até que o grafo possa ser dividido em $k$ comunidades.
+A operação de selecionar e remover a aresta de maior centralidade, tem custo, no máximo $O(n)$ (considerando que os valores de centralidade já são conhecidos).
 
-Para a {\bf Solução por Breadth First Search}...
+A operação de cálculo da centralidade de todas as arestas do grafo depende do algoritmo implementado para obtenção dos caminhos mínimos.
 
-Para a {\bf Solução por Floyd Warshall}...
+Para a {\bf Solução por Breadth First Search}, a complexidade do cálculo do caminho mínimo é $O(|E| + |V|)$, já que todos os vértices e arestas são explorados, no pior caso.
+Dependendo da densidade do grafo, esta complexidade pode variar de $O(|V|)$ para $O(|V|^2)$. Este procedimento é executado variando o vértice inicial, para cada vértice do grafo.
+Portanto, a complexidade de se calcular a centralidade por esta solução é, no pior caso, $O(|V|^3)$.
+
+Para a {\bf Solução por Floyd Warshall}, todos os $v^2$ caminhos mínimos (para todo $i$ e $j$) são obtidos por operações constantes executadas
+em três {\it loops} aninhados, que variam de 1 a $n$ (ver algoritmo \ref{algoritmo3}). Portanto, a complexidade do cálculo é cúbica $O(|V|^3)$. 
+
+Por fim, resta a operação de verificar quantas comunidades existem e de identificá-las.
+Para isso, é feita uma busca em largura no grafo. Quando um vértice é visitado, este é marcado.
+Se ao fim da busca, algum vértice não recebeu a marcação, significa que este faz parte de outra comunidade.
+O processo é repetido para o vértice desmarcado, e assim, sucessivamente, até que todos os vértices estejam marcado e as comunidades identificadas.
+O custo de efetuar este procedimento é $O(|E|+|V|)$, já que todos os vértices e arestas são visitados).
+
+A complexidade do algoritmo todo corresponde ao custo (que prevalece) de se computar os valores de centralidade para todas as arestas, que é $O(|V|^3)$.
+
 
 
 \section{Implementação}
@@ -225,14 +218,6 @@ A execução é feita pelo comando (no diretório {\it bin}):
 \begin{verbatim}
     java Main <arquivo_arestas> <num_comunidades> 
 	      <num_vertices> <algoritmo: b|f>
-\end{verbatim}
-\end{small}
-Em execuções com arquivos de entrada muito grandes, talvez seja necessário aumentar o tamanho em memória disponível para a Máquina Virtual Java.
-Os parâmetros {\it Xmx} e {\it Xms} são adicionados, neste caso. Um exemplo de execução usando estes parâmetros é:
-\begin{small}
-\begin{verbatim}
-    java Main -Xmx1024m -Xms1024m <arquivo_arestas> <num_comunidades>
-                                  <num_vertices> <algoritmo: b|f>
 \end{verbatim}
 \end{small}
 
